@@ -29,9 +29,9 @@ file_check() {
   filename="${1}"
   local resolved_path
   resolved_path="$(realpath "${filename}")"
-  if [[ $(test -a "${resolved_path}" && echo "true") == "true" ]]; then
+  if [[ -a "${resolved_path}" ]]; then
     font_path="${resolved_path}"
-    if [[ "${font_path}" != *.ttf ]]; then
+    if [[ "${font_path}" != +(*.ttf|*.otf) ]]; then
       exit_message "file_not_supported"
     fi
   else
@@ -43,7 +43,7 @@ if [[ "${1}" == "" ]]; then
   exit_message "command_not_found"
 fi
 
-if [[ $(test -d "${HOME}/.local/share/fonts" && echo "true") != "true" ]]; then
+if ! [[ -d "${HOME}/.local/share/fonts" ]]; then
   mkdir -p "${HOME}/.local/share/fonts"
   echo "Created ~/.local/share/fonts directory"
 fi
@@ -54,7 +54,7 @@ while [ "${1}" != "" ]; do
     shift
     filename="${1}"
     resolved_path="$(realpath "${filename}")"
-    if [[ $(test -a "${resolved_path}" && echo "true") == "true" ]]; then
+    if [[ -a "${resolved_path}" ]]; then
       font_path="${resolved_path}"
       if [[ "${font_path}" != *.ttf ]]; then
         exit_message "file_not_supported"
@@ -82,7 +82,7 @@ while [ "${1}" != "" ]; do
     shift
     # file_check "${1}"
     font_name="${1}"
-    if [[ $(test -z "${1}" && echo "true") == "true" ]]; then
+    if [[ -z "${1}" ]]; then
       exit_message "missing_argument"
     fi
     for file in "${HOME}/.local/share/fonts"/*; do
