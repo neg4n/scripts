@@ -64,7 +64,6 @@ while [ "${1}" != "" ]; do
     fi
     IFS='/'
     read -r -a temp <<<"${font_path}"
-    # Print each value of the array by using the loop
     font_name="${temp[${#temp[@]} - 1]}"
     cp "${font_path}" "${HOME}/.local/share/fonts/${font_name}"
     fc-cache -f -v | grep -m 1 -o "abc" | grep -o "123" &
