@@ -11,6 +11,7 @@ print_specific_date() {
 
 echo
 echo -e "Current date: "
+print_specific_date "ISO-8601 Zero" "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 print_specific_date "DD/MM/YYYY" "$(date +"%d-%m-%Y")"
 print_specific_date "Universal" "$(date)"
 echo
